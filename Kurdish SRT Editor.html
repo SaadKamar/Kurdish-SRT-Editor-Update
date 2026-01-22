@@ -131,6 +131,17 @@
 
   </style>
 </head>
+<!-- Add {\an8} button -->
+<button id="addAn8Btn" style="position: fixed; bottom: 150px; right: 20px; padding:6px 10px; border-radius:6px; border:none; background:var(--accent); color:#06281e; font-weight:600; z-index:1000;">
+  Add {\an8}
+</button>
+
+<!-- Go to line input -->
+<div id="gotoLineContainer" style="position: fixed; bottom: 80px; right: 20px; display:flex; gap:6px; z-index:1000;">
+  <input type="number" id="gotoLineInput" placeholder="Line #" style="width:60px; padding:6px; border-radius:6px; border:1px solid var(--accent);">
+  <button id="gotoLineBtn" style="padding:6px 10px; border-radius:6px; border:none; background:var(--accent); color:#06281e; font-weight:600;">Go</button>
+</div>
+
 <!-- Add this inside <body>, just before </body> -->
 <button id="scrollDownBtn" style="
   position: fixed;
@@ -224,7 +235,7 @@ function render() {
       <div class="grid">
         <div>
           <div class="label">Original</div>
-          <textarea readonly>${s.original}</textarea>
+          <textarea>${s.original}</textarea>
         </div>
         <div>
           <div class="label">Kurdish Translation</div>
@@ -326,6 +337,47 @@ function downloadSRT() {
   a.download = name; // now uses the project name
   a.click();
 }
+
+const gotoInput = document.getElementById('gotoLineInput');
+const gotoBtn = document.getElementById('gotoLineBtn');
+
+gotoBtn.addEventListener('click', () => {
+  const line = parseInt(gotoInput.value);
+  if (!line || line < 1 || line > subtitles.length) return alert('Invalid line number');
+
+  const subtitleCards = subsDiv.querySelectorAll('.subtitle');
+  const target = subtitleCards[line - 1]; // arrays are 0-indexed
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+const addAn8Btn = document.getElementById('addAn8Btn');
+
+addAn8Btn.addEventListener('click', () => {
+  const subtitleCards = subsDiv.querySelectorAll('.subtitle');
+  if (!subtitleCards.length) return alert('No subtitles loaded!');
+
+  // Find the first subtitle that is visible in the viewport
+  let added = false;
+  subtitleCards.forEach((card, i) => {
+    const rect = card.getBoundingClientRect();
+    if (!added && rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      const subtitle = subtitles[i];
+      const kurdTa = card.querySelectorAll('textarea')[1]; // Kurdish box
+
+      if (!subtitle.edited.includes('{\\an8}')) {
+        subtitle.edited = '{\\an8} ' + subtitle.edited;
+        kurdTa.value = subtitle.edited; // update textarea
+        saveToStorage();
+        added = true;
+
+        // Scroll to it
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
+
+  if (!added) alert('No visible subtitle to add {\\an8} to.');
+});
 </script>
 
 </body>

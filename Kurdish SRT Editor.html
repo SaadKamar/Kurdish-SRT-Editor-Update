@@ -27,6 +27,15 @@
       --success: #10b981;
     }
 
+    /* ===== LOCAL KURDISH FONT ===== */
+    @font-face {
+      font-family: 'KurdishNRT';
+      src: url('fonts/NRT-Bd.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -144,6 +153,20 @@
       font-family: 'Noto Sans Arabic', sans-serif;
     }
 
+    .kurdish-text {
+      font-family: 'KurdishNRT', 'Noto Sans Arabic', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: right;
+      padding: 16px;
+      letter-spacing: 0;
+    }
+
+    .kurdish-text::placeholder {
+      font-family: 'KurdishNRT', 'Noto Sans Arabic', sans-serif;
+      opacity: 0.6;
+    }
+
     textarea:focus {
       outline: none;
       border-color: var(--accent-sky);
@@ -179,7 +202,6 @@
       border-color: var(--accent-hover);
     }
 
-    /* Custom "Choose File" button */
     input[type="file"]::file-selector-button {
       background: var(--accent-sky);
       color: #082f49;
@@ -201,7 +223,6 @@
       box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
     }
 
-    /* For Firefox */
     input[type="file"]::-moz-file-upload-button {
       background: var(--accent-sky);
       color: #082f49;
@@ -214,7 +235,6 @@
       margin: 0 auto;
     }
 
-    /* Hide any file name display */
     input[type="file"]:after {
       content: none !important;
     }
@@ -312,6 +332,66 @@
       transform: translateY(-2px);
     }
 
+    /* Kurdish controls container */
+    .kurdish-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Line buttons container */
+    .line-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Individual line buttons */
+    .line-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(30, 41, 59, 0.3);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Delete button specific styling */
+.delete-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+    .line-btn:hover {
+      background: rgba(14, 165, 233, 0.1);
+      color: var(--accent-sky);
+      border-color: var(--accent-sky);
+      transform: translateY(-2px);
+    }
+
+    .before-btn:hover {
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+    }
+
+    .after-btn:hover {
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+    }
+
     /* Floating action buttons */
     .floating-btn {
       position: fixed;
@@ -398,16 +478,16 @@
     }
 
     .saved-files-title {
-  font-size: 16px;
-  color: var(--accent-sky);
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  gap: 6px;
-}
+      font-size: 16px;
+      color: var(--accent-sky);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      gap: 6px;
+    }
 
     .saved-file-item {
       display: flex;
@@ -646,45 +726,406 @@
     }
 
     /* Perfect icon-text alignment */
-h1 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
 
-h1 img {
-  height: 1em; /* Same height as font size */
-  vertical-align: middle;
-  margin-bottom: 2px; /* Fine adjustment */
-}
+    h1 img {
+      height: 1em;
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
 
-/* Upload section */
-.card[style*="text-align: center"] > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 18px;
-}
+    .card[style*="text-align: center"] > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 18px;
+    }
 
-.card[style*="text-align: center"] img {
-  height: 1em; /* Match text height */
-  vertical-align: middle;
-}
+    .card[style*="text-align: center"] img {
+      height: 1em;
+      vertical-align: middle;
+    }
 
-/* Saved projects */
-.saved-files-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+    .saved-files-title img {
+      height: 1em;
+      vertical-align: middle;
+      margin-bottom: 1px;
+    }
 
-.saved-files-title img {
-  height: 1em; /* Match text height */
-  vertical-align: middle;
-  margin-bottom: 1px;
-}
+    /* ===== CUSTOM MODAL DESIGN ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 11, 14, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-card {
+      background: linear-gradient(135deg, #111318, #0f1117);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(14, 165, 233, 0.1);
+      animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      padding: 24px;
+      background: linear-gradient(90deg, rgba(14, 165, 233, 0.1), transparent);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      animation: pulse-danger 2s infinite;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 28px;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-message {
+      font-size: 16px;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .modal-file-name {
+      font-family: monospace;
+      background: rgba(14, 165, 233, 0.1);
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      color: var(--accent-sky);
+      margin-bottom: 20px;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .modal-warning {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      font-size: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(10, 11, 14, 0.5);
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .modal-btn-cancel {
+      background: rgba(30, 41, 59, 0.8);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .modal-btn-cancel:hover {
+      background: rgba(30, 41, 59, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-btn-delete {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .modal-btn-delete:hover {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Animations */
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes pulse-danger {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .modal-card {
+        width: 95%;
+        margin: 10px;
+      }
+      
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+
+    /* No Subtitle Alert Modal Styles */
+    .modal-tips {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .modal-tip {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(14, 165, 233, 0.05);
+      border-radius: 10px;
+      border: 1px solid rgba(14, 165, 233, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .modal-tip:hover {
+      background: rgba(14, 165, 233, 0.1);
+      border-color: rgba(14, 165, 233, 0.2);
+      transform: translateX(5px);
+    }
+
+    .tip-icon {
+      margin-right: 12px;
+      background: rgba(14, 165, 233, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tip-icon img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .tip-content {
+      flex: 1;
+    }
+
+    .tip-content strong {
+      display: block;
+      color: var(--accent-sky);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .tip-desc {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .modal-btn-primary {
+      background: linear-gradient(135deg, var(--accent-sky), #0284c7);
+      color: #082f49;
+      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+    }
+
+    .modal-btn-primary:hover {
+      background: linear-gradient(135deg, var(--accent-hover), #0ea5e9);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+    }
+
+    /* Line Insert Modal Styles */
+    .time-input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .time-input {
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .time-input:focus {
+      outline: none;
+      border-color: var(--accent-sky);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    .time-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .duration-display {
+      text-align: center;
+      padding: 10px;
+      background: rgba(14, 165, 233, 0.1);
+      border-radius: 8px;
+      margin: 10px 0;
+      font-family: monospace;
+      color: var(--accent-sky);
+    }
+
+    .line-styles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .line-style-option {
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.3);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: monospace;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .line-style-option:hover {
+      background: rgba(30, 41, 59, 0.5);
+      border-color: var(--border-light);
+    }
+
+    .line-style-option.active {
+      background: rgba(14, 165, 233, 0.2);
+      border-color: var(--accent-sky);
+      color: var(--accent-sky);
+      box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1);
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #111318, #0f1117);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--success);
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 3000;
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 300px;
+    }
+    
+    .notification-success {
+      border-left-color: var(--success);
+    }
+    
+    .notification-warning {
+      border-left-color: #f59e0b;
+    }
+    
+    @media (max-width: 600px) {
+      .notification {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -692,9 +1133,9 @@ h1 img {
 <header>
   <div style="position: relative; z-index: 1;">
     <h1 style="font-size: 28px; margin-bottom: 8px; background: linear-gradient(to right, #f1f5f9, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; justify-content: center; gap: 2px;">
-  <img src="icons/subtitle.png" alt="Editor" style="height: 28px; vertical-align: middle;">
-  Kurdish SRT Editor
-</h1>
+      <img src="icons/subtitle.png" alt="Editor" style="height: 28px; vertical-align: middle;">
+      Kurdish SRT Editor
+    </h1>
     <div class="author-cool">
       <img src="icons/author.png" alt="Author" class="author-icon">
       <span class="author-text">
@@ -727,7 +1168,7 @@ h1 img {
   <input type="file" id="fileInput" accept=".srt" />
 </div>
 
-  <div class="card">
+<div class="card">
   <div class="saved-files-title">
     <img src="icons/saved-projects.png" alt="Saved" style="height: 16px; vertical-align: middle;">
     Saved Projects
@@ -735,18 +1176,17 @@ h1 img {
   <div id="savedFiles"></div>
 </div>
 
-  <div id="subs"></div>
+<div id="subs"></div>
 
-  <div class="card actions" id="controls" style="display:none">
-    <button class="primary" onclick="downloadSRT()">
-      <img src="icons/download.png" alt="Download" style="height: 20px; margin-right: 8px;">
-      Export Kurdish SRT
-    </button>
-    <button class="secondary" onclick="clearCurrent()">
-      <img src="icons/close.png" alt="Close" style="height: 18px; margin-right: 8px;">
-      Close File
-    </button>
-  </div>
+<div class="card actions" id="controls" style="display:none">
+  <button class="primary" onclick="downloadSRT()">
+    <img src="icons/download.png" alt="Download" style="height: 20px; margin-right: 8px;">
+    Export Kurdish SRT
+  </button>
+  <button class="secondary" onclick="clearCurrent()">
+    <img src="icons/close.png" alt="Close" style="height: 18px; margin-right: 8px;">
+    Close File
+  </button>
 </div>
 
 <script>
@@ -810,8 +1250,27 @@ function render() {
         </div>
         <div>
           <div class="label">Kurdish Translation</div>
-          <button class="translate-btn"><img src="icons/translate-icon.png" alt="Translate" style="height: 16px; margin-right: 6px; vertical-align: middle;"> Translate</button>
-          <textarea dir="rtl">${s.edited}</textarea>
+          <div class="kurdish-controls">
+            <button class="translate-btn">
+              <img src="icons/translate-icon.png" alt="Translate" style="height: 16px; margin-right: 6px; vertical-align: middle;">
+              Translate
+            </button>
+            <div class="line-buttons">
+  <button class="line-btn before-btn" title="Insert line before">
+    <img src="icons/line-before.png" alt="Before" style="height: 14px; margin-right: 4px;">
+    Insert Before
+  </button>
+  <button class="line-btn after-btn" title="Insert line after">
+    <img src="icons/line-after.png" alt="After" style="height: 14px; margin-right: 4px;">
+    Insert After
+  </button>
+  <button class="line-btn delete-btn" title="Delete this line">
+    <img src="icons/line-delete.png" alt="Delete" style="height: 14px; margin-right: 4px;">
+    Delete Line
+  </button>
+</div>
+          </div>
+          <textarea dir="rtl" class="kurdish-text">${s.edited}</textarea>
         </div>
       </div>
     `;
@@ -835,8 +1294,12 @@ function render() {
       btn.innerHTML = '<img src="icons/loading.png" alt="Loading" style="height: 14px; margin-right: 6px; vertical-align: middle; animation: spin 1s linear infinite;"> Translating...';
       btn.disabled = true;
 
-      // Step 1: join all lines into one string and remove extra whitespace
-      const textToTranslate = subtitle.original.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
+      // Step 1: Remove italic tags and clean the text
+      const textToTranslate = subtitle.original
+        .replace(/<\/?i>/gi, '')  // Remove <i> and </i> tags
+        .replace(/\r?\n/g, ' ')   // Replace line breaks with spaces
+        .replace(/\s+/g, ' ')     // Collapse multiple spaces
+        .trim();
 
       try {
         // Step 2: Translate to Sorani Kurdish (ckb)
@@ -868,6 +1331,26 @@ function render() {
       }
     });
   });
+
+  // Attach line button events after rendering
+  subsDiv.querySelectorAll('.before-btn').forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      showLineInsertModal(i, 'before');
+    });
+  });
+
+  subsDiv.querySelectorAll('.after-btn').forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      showLineInsertModal(i, 'after');
+    });
+  });
+
+  // Attach delete button events
+  subsDiv.querySelectorAll('.delete-btn').forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      showDeleteLineModal(i);
+    });
+  });
 }
 
 function saveToStorage() {
@@ -897,7 +1380,7 @@ function loadSavedFiles() {
         <img src="icons/trash.png" alt="Delete" style="height: 14px; margin-right: 6px; vertical-align: middle;">
         Delete
       `;
-      deleteBtn.onclick = () => confirm('Delete this saved project?') && (localStorage.removeItem(key), loadSavedFiles(), currentFileKey===key && clearCurrent());
+      deleteBtn.onclick = () => showDeleteModal(key);
 
       container.appendChild(openBtn);
       container.appendChild(deleteBtn);
@@ -971,7 +1454,347 @@ addAn8Btn.addEventListener('click', () => {
     }
   });
   
-  if (!added) alert('No visible subtitle to add {\\an8} to.');
+  if (!added) showNoSubtitleModal();
+});
+
+// ===== LINE INSERT FUNCTIONALITY =====
+let currentLineIndex = -1;
+let currentLinePosition = 'before';
+
+function showLineInsertModal(lineIndex, position) {
+  currentLineIndex = lineIndex;
+  currentLinePosition = position;
+  
+  const subtitle = subtitles[lineIndex];
+  const [startTime, endTime] = subtitle.time.split(' --> ');
+  
+  // Set default times based on position
+  let defaultStart = startTime;
+  let defaultEnd = endTime;
+  
+  if (position === 'before') {
+    // For "Insert Before", create a line that ends when current line starts
+    defaultEnd = startTime;
+    // Calculate start time 1 second before
+    defaultStart = adjustTime(startTime, -1000);
+  } else if (position === 'after') {
+    // For "Insert After", create a line that starts when current line ends
+    defaultStart = endTime;
+    // Calculate end time 1 second after
+    defaultEnd = adjustTime(endTime, 1000);
+  }
+  
+  // Set modal title
+  document.getElementById('lineModalTitle').textContent = 
+    position === 'before' ? 'Insert Line Before' : 'Insert Line After';
+  
+  // Set modal message
+  document.getElementById('lineModalMessage').textContent = 
+    position === 'before' 
+      ? `Insert a new subtitle line BEFORE line ${lineIndex + 1}`
+      : `Insert a new subtitle line AFTER line ${lineIndex + 1}`;
+  
+  // Set time inputs
+  document.getElementById('lineStartTime').value = defaultStart;
+  document.getElementById('lineEndTime').value = defaultEnd;
+  updateDurationDisplay();
+  
+  // Reset line style
+  document.querySelectorAll('.line-style-option').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.style === 'solid') btn.classList.add('active');
+  });
+  
+  // Show modal
+  document.getElementById('lineInsertModal').style.display = 'flex';
+  document.addEventListener('keydown', handleLineModalEscapeKey);
+}
+
+function closeLineInsertModal() {
+  document.getElementById('lineInsertModal').style.display = 'none';
+  currentLineIndex = -1;
+  document.removeEventListener('keydown', handleLineModalEscapeKey);
+}
+
+function handleLineModalEscapeKey(e) {
+  if (e.key === 'Escape') closeLineInsertModal();
+}
+
+function updateDurationDisplay() {
+  const start = document.getElementById('lineStartTime').value;
+  const end = document.getElementById('lineEndTime').value;
+  
+  if (!start || !end) return;
+  
+  const startMs = timeToMs(start);
+  const endMs = timeToMs(end);
+  const durationMs = endMs - startMs;
+  
+  const durationDisplay = document.getElementById('lineDuration');
+  if (durationMs < 0) {
+    durationDisplay.textContent = 'Invalid: End time must be after start time';
+    durationDisplay.style.color = '#ef4444';
+  } else {
+    const seconds = (durationMs / 1000).toFixed(2);
+    durationDisplay.textContent = `Duration: ${seconds} seconds`;
+    durationDisplay.style.color = '#0ea5e9';
+  }
+}
+
+function timeToMs(timeStr) {
+  const [hours, minutes, secondsMs] = timeStr.split(':');
+  const [seconds, milliseconds] = secondsMs.split(',');
+  return parseInt(hours) * 3600000 + 
+         parseInt(minutes) * 60000 + 
+         parseInt(seconds) * 1000 + 
+         parseInt(milliseconds);
+}
+
+function msToTime(ms) {
+  const hours = Math.floor(ms / 3600000);
+  ms %= 3600000;
+  const minutes = Math.floor(ms / 60000);
+  ms %= 60000;
+  const seconds = Math.floor(ms / 1000);
+  const milliseconds = ms % 1000;
+  
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')},${milliseconds.toString().padStart(3, '0')}`;
+}
+
+function adjustTime(timeStr, msAdjust) {
+  const ms = timeToMs(timeStr);
+  return msToTime(ms + msAdjust);
+}
+
+function insertNewLine() {
+  if (currentLineIndex === -1) return;
+  
+  const startTime = document.getElementById('lineStartTime').value;
+  const endTime = document.getElementById('lineEndTime').value;
+  
+  // Validate times
+  if (!startTime || !endTime) {
+    alert('Please enter both start and end times');
+    return;
+  }
+  
+  if (timeToMs(endTime) <= timeToMs(startTime)) {
+    alert('End time must be after start time');
+    return;
+  }
+  
+  // Get selected line style
+  const selectedStyle = document.querySelector('.line-style-option.active').dataset.style;
+  
+  // Define line content based on style
+  const lineStyles = {
+    solid: '━━━━━━━━━━━━━━━━━━━━',
+    dashed: '╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌',
+    double: '════════════════════',
+    arrow: '━━━━━━━━▶━━━━━━━━',
+    stars: '✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧',
+    text: document.getElementById('customLineText').value.trim() || '────────────────────'
+  };
+  
+  const lineContent = lineStyles[selectedStyle];
+  
+  // Create new subtitle object
+  const newSubtitle = {
+    index: '0', // Will be updated after insertion
+    time: `${startTime} --> ${endTime}`,
+    original: lineContent,
+    edited: lineContent
+  };
+  
+  // Determine insertion position
+  let insertIndex;
+  if (currentLinePosition === 'before') {
+    insertIndex = currentLineIndex;
+  } else {
+    insertIndex = currentLineIndex + 1;
+  }
+  
+  // Insert the new subtitle
+  subtitles.splice(insertIndex, 0, newSubtitle);
+  
+  // Re-index all subtitles
+  subtitles.forEach((sub, idx) => {
+    sub.index = (idx + 1).toString();
+  });
+  
+  // Save and re-render
+  saveToStorage();
+  render();
+  
+  // Close modal
+  closeLineInsertModal();
+  
+  // Show success notification
+  showNotification('New subtitle line inserted', 'success');
+  
+  // Scroll to the new line
+  setTimeout(() => {
+    const newCards = subsDiv.querySelectorAll('.subtitle');
+    if (newCards[insertIndex]) {
+      newCards[insertIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 100);
+}
+
+// ===== DELETE LINE FUNCTIONALITY =====
+let lineToDeleteIndex = -1;
+
+function showDeleteLineModal(lineIndex) {
+  lineToDeleteIndex = lineIndex;
+  const subtitle = subtitles[lineIndex];
+  
+  // Set modal content
+  document.getElementById('deleteLineMessage').textContent = 
+    `Are you sure you want to delete subtitle line ${lineIndex + 1}?`;
+  document.getElementById('deleteLineTime').textContent = subtitle.time;
+  
+  // Show preview of text (truncate if too long)
+  const previewText = subtitle.original.length > 50 
+    ? subtitle.original.substring(0, 50) + '...' 
+    : subtitle.original;
+  document.getElementById('deleteLineText').textContent = previewText;
+  
+  // Show modal
+  document.getElementById('deleteLineModal').style.display = 'flex';
+  document.addEventListener('keydown', handleDeleteLineEscapeKey);
+}
+
+function closeDeleteLineModal() {
+  document.getElementById('deleteLineModal').style.display = 'none';
+  lineToDeleteIndex = -1;
+  document.removeEventListener('keydown', handleDeleteLineEscapeKey);
+}
+
+function confirmDeleteLine() {
+  if (lineToDeleteIndex === -1 || !subtitles[lineToDeleteIndex]) return;
+  
+  // Remove the subtitle
+  subtitles.splice(lineToDeleteIndex, 1);
+  
+  // Re-index all subtitles
+  subtitles.forEach((sub, idx) => {
+    sub.index = (idx + 1).toString();
+  });
+  
+  // Save and re-render
+  saveToStorage();
+  render();
+  
+  // Close modal
+  closeDeleteLineModal();
+  
+  // Show success notification
+  showNotification('Subtitle line deleted', 'success');
+}
+
+function handleDeleteLineEscapeKey(e) {
+  if (e.key === 'Escape') closeDeleteLineModal();
+}
+
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.innerHTML = `
+    <img src="icons/${type === 'success' ? 'check' : 'warning'}.png" alt="${type}" style="width: 20px; height: 20px; margin-right: 12px;">
+    <span>${message}</span>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateY(0)';
+    notification.style.opacity = '1';
+  }, 10);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateY(-20px)';
+    notification.style.opacity = '0';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 3000);
+}
+
+// ===== DELETE MODAL SYSTEM =====
+let deleteKeyToRemove = null;
+
+function showDeleteModal(key) {
+  deleteKeyToRemove = key;
+  const fileName = key.replace('srt-', '');
+  
+  document.getElementById('modalFileName').textContent = fileName;
+  document.getElementById('deleteModal').style.display = 'flex';
+  document.addEventListener('keydown', handleEscapeKey);
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').style.display = 'none';
+  deleteKeyToRemove = null;
+  document.removeEventListener('keydown', handleEscapeKey);
+}
+
+function confirmDelete() {
+  if (!deleteKeyToRemove) return;
+  
+  localStorage.removeItem(deleteKeyToRemove);
+  loadSavedFiles();
+  
+  if (currentFileKey === deleteKeyToRemove) {
+    clearCurrent();
+  }
+  
+  closeDeleteModal();
+  showNotification('Project deleted successfully', 'success');
+}
+
+function handleEscapeKey(e) {
+  if (e.key === 'Escape') closeDeleteModal();
+}
+
+// ===== NO SUBTITLE ALERT MODAL =====
+function showNoSubtitleModal() {
+  document.getElementById('noSubtitleModal').style.display = 'flex';
+  document.addEventListener('keydown', handleNoSubtitleEscapeKey);
+}
+
+function closeNoSubtitleModal() {
+  document.getElementById('noSubtitleModal').style.display = 'none';
+  document.removeEventListener('keydown', handleNoSubtitleEscapeKey);
+}
+
+function handleNoSubtitleEscapeKey(e) {
+  if (e.key === 'Escape') closeNoSubtitleModal();
+}
+
+// Initialize time input listeners
+document.addEventListener('DOMContentLoaded', () => {
+  // Line style selection
+  document.querySelectorAll('.line-style-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.line-style-option').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      // Show/hide custom text input
+      const customTextInput = document.getElementById('customLineText');
+      if (btn.dataset.style === 'text') {
+        customTextInput.style.display = 'block';
+      } else {
+        customTextInput.style.display = 'none';
+      }
+    });
+  });
+  
+  // Time input listeners
+  document.getElementById('lineStartTime').addEventListener('input', updateDurationDisplay);
+  document.getElementById('lineEndTime').addEventListener('input', updateDurationDisplay);
 });
 
 // Keyboard shortcuts
@@ -1007,7 +1830,220 @@ subsDiv.addEventListener('input', () => {
     });
   });
 });
+
+// Close modals when clicking outside
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDeleteModal();
+});
+
+document.getElementById('noSubtitleModal').addEventListener('click', function(e) {
+  if (e.target === this) closeNoSubtitleModal();
+});
+
+document.getElementById('lineInsertModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLineInsertModal();
+});
+
+document.getElementById('deleteLineModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDeleteLineModal();
+});
 </script>
+
+<!-- Custom Delete Confirmation Modal -->
+<div id="deleteModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-icon">
+        <img src="icons/trash.png" alt="Delete" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+      </div>
+      <div class="modal-title">Confirm Deletion</div>
+      <button class="modal-close" onclick="closeDeleteModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-message">Are you sure you want to delete this project?</div>
+      <div class="modal-file-name" id="modalFileName"></div>
+      <div class="modal-warning">
+        <img src="icons/warning.png" alt="Warning" style="width: 18px; height: 18px; margin-right: 8px;">
+        This action cannot be undone.
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">
+        <img src="icons/close.png" alt="Cancel" style="width: 16px; height: 16px; margin-right: 8px;">
+        Cancel
+      </button>
+      <button class="modal-btn modal-btn-delete" onclick="confirmDelete()">
+        <img src="icons/trash.png" alt="Delete" style="width: 16px; height: 16px; margin-right: 8px; filter: brightness(0) invert(1);">
+        Delete Project
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- No Subtitle Alert Modal -->
+<div id="noSubtitleModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 350px;">
+    <div class="modal-header">
+      <div class="modal-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);">
+        <img src="icons/info.png" alt="Info" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+      </div>
+      <div class="modal-title">No Visible Subtitle</div>
+      <button class="modal-close" onclick="closeNoSubtitleModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-message">There's no subtitle currently visible in your viewport to add {\an8} to.</div>
+      
+      <div class="modal-tips">
+        <div class="modal-tip">
+          <div class="tip-icon">
+            <img src="icons/subtitle.png" alt="Upload" style="width: 20px; height: 20px;">
+          </div>
+          <div class="tip-content">
+            <strong>Load a subtitle file first</strong>
+            <div class="tip-desc">Upload an SRT file to see subtitles</div>
+          </div>
+        </div>
+        
+        <div class="modal-tip">
+          <div class="tip-icon">
+            <img src="icons/eye.png" alt="Visible" style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+          </div>
+          <div class="tip-content">
+            <strong>Scroll to a subtitle</strong>
+            <div class="tip-desc">Make sure a subtitle is fully visible on screen</div>
+          </div>
+        </div>
+        
+        <div class="modal-tip">
+          <div class="tip-icon">
+            <img src="icons/target.png" alt="Target" style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+          </div>
+          <div class="tip-content">
+            <strong>Use line navigation</strong>
+            <div class="tip-desc">Enter a line number in the bottom-right box</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-primary" onclick="closeNoSubtitleModal()">
+        <img src="icons/check.png" alt="OK" style="width: 16px; height: 16px; margin-right: 8px;">
+        Got it
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Line Insert Modal -->
+<div id="lineInsertModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 450px;">
+    <div class="modal-header">
+      <div class="modal-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);">
+        <img src="icons/line.png" alt="Line" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+      </div>
+      <div class="modal-title" id="lineModalTitle">Insert Line</div>
+      <button class="modal-close" onclick="closeLineInsertModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-message" id="lineModalMessage"></div>
+      
+      <div style="margin: 20px 0;">
+        <div class="time-input-group">
+          <div>
+            <label class="time-label">Start Time (HH:MM:SS,mmm)</label>
+            <input type="text" id="lineStartTime" class="time-input" placeholder="00:00:00,000">
+          </div>
+          <div>
+            <label class="time-label">End Time (HH:MM:SS,mmm)</label>
+            <input type="text" id="lineEndTime" class="time-input" placeholder="00:00:02,000">
+          </div>
+        </div>
+        <div class="duration-display" id="lineDuration">Duration: 0.00 seconds</div>
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <div class="label">Line Style</div>
+        <div class="line-styles">
+          <button class="line-style-option active" data-style="solid">━━━━━━━━━━━━━━━━━━━━</button>
+          <button class="line-style-option" data-style="dashed">╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌</button>
+          <button class="line-style-option" data-style="double">════════════════════</button>
+          <button class="line-style-option" data-style="arrow">━━━━━━━━▶━━━━━━━━</button>
+          <button class="line-style-option" data-style="stars">✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧ ✧</button>
+          <button class="line-style-option" data-style="text">Custom Text</button>
+        </div>
+      </div>
+      
+      <div style="margin: 20px 0; display: none;" id="customLineTextContainer">
+        <div class="label">Custom Text</div>
+        <input type="text" id="customLineText" class="time-input" placeholder="Enter custom separator text" style="width: 100%;">
+      </div>
+      
+      <div class="modal-warning" style="background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.2); color: var(--accent-sky);">
+        <img src="icons/info.png" alt="Info" style="width: 16px; height: 16px; margin-right: 8px; filter: brightness(0) invert(1);">
+        This creates a new subtitle line with its own timing.
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeLineInsertModal()">
+        <img src="icons/close.png" alt="Cancel" style="width: 16px; height: 16px; margin-right: 8px;">
+        Cancel
+      </button>
+      <button class="modal-btn modal-btn-primary" onclick="insertNewLine()">
+        <img src="icons/check.png" alt="Insert" style="width: 16px; height: 16px; margin-right: 8px;">
+        Insert Line
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Line Confirmation Modal -->
+<div id="deleteLineModal" class="modal-overlay" style="display: none;">
+  <div class="modal-card" style="max-width: 400px;">
+    <div class="modal-header">
+      <div class="modal-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);">
+        <img src="icons/line-delete.png" alt="Delete" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+      </div>
+      <div class="modal-title">Delete Subtitle Line</div>
+      <button class="modal-close" onclick="closeDeleteLineModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-message" id="deleteLineMessage">Are you sure you want to delete this subtitle line?</div>
+      
+      <div class="modal-warning" style="margin-top: 15px;">
+        <img src="icons/warning.png" alt="Warning" style="width: 18px; height: 18px; margin-right: 8px;">
+        This will permanently delete:
+      </div>
+      
+      <div style="margin: 15px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
+        <div style="color: var(--accent-sky); font-family: monospace; margin-bottom: 5px;" id="deleteLineTime"></div>
+        <div style="color: var(--text-secondary); font-size: 14px;" id="deleteLineText"></div>
+      </div>
+      
+      <div class="modal-warning">
+        <img src="icons/info.png" alt="Info" style="width: 16px; height: 16px; margin-right: 8px; filter: brightness(0) invert(1);">
+        This action cannot be undone. All following lines will be renumbered.
+      </div>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeDeleteLineModal()">
+        <img src="icons/close.png" alt="Cancel" style="width: 16px; height: 16px; margin-right: 8px;">
+        Cancel
+      </button>
+      <button class="modal-btn modal-btn-delete" onclick="confirmDeleteLine()">
+        <img src="icons/trash.png" alt="Delete" style="width: 16px; height: 16px; margin-right: 8px; filter: brightness(0) invert(1);">
+        Delete Line
+      </button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

@@ -257,23 +257,33 @@ function render() {
 
   // Attach translate button events after rendering
   subsDiv.querySelectorAll('.translateBtn').forEach((btn, i) => {
-    btn.addEventListener('click', async () => {
-      const subtitle = subtitles[i];
-      const textToTranslate = subtitle.original;
-      if (!textToTranslate.trim()) return;
+  btn.addEventListener('click', async () => {
+    const subtitle = subtitles[i];
+    if (!subtitle.original.trim()) return;
 
-      try {
-        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ckb&dt=t&q=${encodeURIComponent(textToTranslate)}`);
-        const data = await res.json();
-        subtitle.edited = data[0].map(d => d[0]).join('');
-        const kurdTa = subsDiv.querySelectorAll('.subtitle')[i].querySelectorAll('textarea')[1];
-        kurdTa.value = subtitle.edited;
-        saveToStorage();
-      } catch (err) {
-        alert('Translation failed: ' + err);
-      }
-    });
+    // Step 1: join all lines into one string and remove extra whitespace
+    const textToTranslate = subtitle.original.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
+
+    try {
+      // Step 2: Translate to Sorani Kurdish (ckb)
+      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ckb&dt=t&q=${encodeURIComponent(textToTranslate)}`);
+      const data = await res.json();
+
+      // Step 3: Join translated parts into a single line
+      const translatedText = data[0].map(d => d[0]).join('').replace(/\n/g, ' ').trim();
+
+      subtitle.edited = translatedText;
+
+      // Step 4: Update Kurdish textarea
+      const kurdTa = subsDiv.querySelectorAll('.subtitle')[i].querySelectorAll('textarea')[1];
+      kurdTa.value = subtitle.edited;
+
+      saveToStorage();
+    } catch (err) {
+      alert('Translation failed: ' + err);
+    }
   });
+});
 }
 
 function saveToStorage() {

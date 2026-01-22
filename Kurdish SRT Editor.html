@@ -3,180 +3,750 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SRT Kurdish Translator</title>
+  <title>SRT Kurdish Editor</title>
 
   <!-- Kurdish-friendly font -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    .author {
-      text-align: center;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
     :root {
-      --bg: #0d0f12;
-      --card: #16181d;
-      --border: #2a2d34;
-      --accent: #10a37f;
-      --text: #e6e6e6;
-      --muted: #9aa0a6;
+      --bg-dark: #0a0b0e;
+      --bg-card: #111318;
+      --bg-input: #0d0f14;
+      --border: #2a2f3d;
+      --border-light: #3a4050;
+      --accent-sky: #0ea5e9;
+      --accent-glow: rgba(14, 165, 233, 0.5);
+      --accent-hover: #38bdf8;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --shadow-glow: rgba(14, 165, 233, 0.25);
+      --danger: #ef4444;
+      --success: #10b981;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       margin: 0;
       font-family: 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #111318, #0d0f12);
-      color: var(--text);
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #0f1117 50%, var(--bg-dark) 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
     }
 
     header {
-      padding: 18px;
+      padding: 24px;
       text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: .3px;
+      background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1), transparent);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.05), transparent);
+      animation: shimmer 8s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
-      padding: 14px;
+      padding: 20px;
     }
 
     .card {
-      background: var(--card);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px;
-      margin-bottom: 14px;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: all 0.3s ease;
     }
 
-    input[type=file] {
-      width: 100%;
-      padding: 14px;
-      border-radius: 14px;
-      background: #0d0f12;
-      color: var(--text);
-      border: 1px dashed var(--accent);
+    .card:hover {
+      border-color: var(--border-light);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
 
     .subtitle {
       margin-bottom: 16px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .time {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--accent-sky);
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: rgba(14, 165, 233, 0.1);
+      border-radius: 8px;
+      display: inline-block;
+      font-family: monospace;
     }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     textarea {
       width: 100%;
-      min-height: 60px;
-      background: #0d0f12;
-      color: var(--text);
-      border-radius: 14px;
+      min-height: 80px;
+      background: var(--bg-input);
+      color: var(--text-primary);
+      border-radius: 12px;
       border: 1px solid var(--border);
-      padding: 10px;
+      padding: 14px;
       resize: vertical;
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 15px;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      font-family: 'Noto Sans Arabic', sans-serif;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-sky);
+      box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
     textarea[readonly] {
-      color: #c3c7ce;
+      color: var(--text-secondary);
+      background: rgba(13, 15, 20, 0.5);
+    }
+
+    /* ===== CLEAN FILE INPUT ===== */
+    input[type="file"] {
+      position: relative;
+      color: transparent !important;
+      width: 100%;
+      padding: 30px 20px;
+      border-radius: 14px;
+      background: rgba(14, 165, 233, 0.05);
+      border: 2px dashed var(--accent-sky);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 80px;
+      margin: 10px 0;
+    }
+
+    input[type="file"]:hover {
+      background: rgba(14, 165, 233, 0.1);
+      border-color: var(--accent-hover);
+    }
+
+    /* Custom "Choose File" button */
+    input[type="file"]::file-selector-button {
+      background: var(--accent-sky);
+      color: #082f49;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+    }
+
+    /* For Firefox */
+    input[type="file"]::-moz-file-upload-button {
+      background: var(--accent-sky);
+      color: #082f49;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Hide any file name display */
+    input[type="file"]:after {
+      content: none !important;
     }
 
     .actions {
       display: flex;
       gap: 12px;
+      margin-top: 20px;
     }
 
     button {
       flex: 1;
-      padding: 14px;
-      border-radius: 16px;
+      padding: 16px 24px;
+      border-radius: 14px;
       border: none;
       font-weight: 600;
-      background: var(--accent);
-      color: #06281e;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--accent-sky), #0284c7);
+      color: #082f49;
+      box-shadow: 0 4px 15px var(--shadow-glow);
+    }
+
+    button.primary:hover {
+      background: linear-gradient(135deg, var(--accent-hover), #0ea5e9);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(14, 165, 233, 0.4);
+    }
+
+    button.primary:active {
+      transform: translateY(0);
     }
 
     button.secondary {
-      background: #1f2228;
-      color: var(--text);
+      background: rgba(30, 41, 59, 0.5);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(4px);
+    }
+
+    button.secondary:hover {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: var(--border-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .file-list button {
       width: 100%;
       margin-top: 8px;
     }
+
+    .translate-btn {
+      padding: 10px 16px;
+      background: rgba(14, 165, 233, 0.2);
+      color: var(--accent-sky);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .translate-btn:hover {
+      background: rgba(14, 165, 233, 0.3);
+      border-color: var(--accent-sky);
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Floating action buttons */
+    .floating-btn {
+      position: fixed;
+      z-index: 1000;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 6px 25px var(--shadow-glow);
+    }
+
+    .floating-btn:active {
+      transform: scale(0.95);
+    }
+
+    #addAn8Btn {
+      bottom: 150px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--accent-sky), #0284c7);
+      color: #082f49;
+    }
+
+    #scrollDownBtn {
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--accent-sky), #0284c7);
+      color: #082f49;
+    }
+
+    #gotoLineContainer {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+      background: var(--bg-card);
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px var(--shadow);
+    }
+
+    #gotoLineInput {
+      width: 70px;
+      padding: 10px;
+      border-radius: 10px;
+      background: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    #gotoLineInput:focus {
+      outline: none;
+      border-color: var(--accent-sky);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+
+    #gotoLineBtn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: rgba(14, 165, 233, 0.2);
+      color: var(--accent-sky);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      font-weight: 600;
+    }
+
+    #gotoLineBtn:hover {
+      background: rgba(14, 165, 233, 0.3);
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+    }
+
+    .saved-files-title {
+  font-size: 16px;
+  color: var(--accent-sky);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 6px;
+}
+
+    .saved-file-item {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 12px;
+      background: rgba(30, 41, 59, 0.3);
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .saved-file-item:hover {
+      background: rgba(30, 41, 59, 0.5);
+      border-color: var(--border-light);
+    }
+
+    .file-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .file-btn.primary {
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-sky);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+    }
+
+    .file-btn.primary:hover {
+      background: rgba(14, 165, 233, 0.25);
+      border-color: var(--accent-sky);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+    }
+
+    .file-btn.secondary {
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .file-btn.secondary:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #f87171;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    .file-btn img {
+      margin-right: 8px;
+    }
+
+    .glow {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+    }
+
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: linear-gradient(135deg, #475569, #334155);
+      color: var(--text-primary);
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 600px) {
+      .container {
+        padding: 12px;
+      }
+      
+      .card {
+        padding: 16px;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+      }
+      
+      #addAn8Btn {
+        bottom: 140px;
+      }
+      
+      #gotoLineContainer {
+        bottom: 70px;
+        right: 12px;
+      }
+    }
+    
+    /* PNG Icon Styling */
+    .floating-btn img {
+      transition: transform 0.3s ease;
+    }
+
+    .floating-btn:hover img {
+      transform: translateY(2px);
+    }
+
+    .primary img, .secondary img {
+      transition: transform 0.2s ease;
+    }
+
+    .primary:hover img, .secondary:hover img {
+      transform: scale(1.1);
+    }
+
+    .translate-btn img {
+      vertical-align: middle;
+      height: 14px;
+      margin-right: 6px;
+    }
+
+    .translate-btn:hover img {
+      opacity: 0.8;
+    }
+
+    .saved-file-item {
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ===== COOL AUTHOR DESIGN ===== */
+    .author-cool {
+      text-align: center;
+      font-size: 13px;
+      margin: 5px auto 25px auto;
+      padding: 8px 20px;
+      background: rgba(14, 165, 233, 0.1);
+      border-radius: 50px;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      animation: author-glow 3s ease-in-out infinite;
+      backdrop-filter: blur(5px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1);
+    }
+
+    /* Shine animation effect */
+    .author-cool::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: author-shine 8s infinite;
+    }
+
+    .author-icon {
+      width: 18px;
+      height: 18px;
+      animation: author-float 4s ease-in-out infinite;
+    }
+
+    .author-text {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .author-created {
+      color: var(--text-muted);
+    }
+
+    .author-name {
+      color: var(--accent-sky);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes author-glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+        border-color: rgba(14, 165, 233, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+        border-color: rgba(14, 165, 233, 0.5);
+      }
+    }
+
+    @keyframes author-shine {
+      0% {
+        left: -100%;
+      }
+      20%, 100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes author-float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-4px) rotate(5deg);
+      }
+    }
+
+    /* ===== MISSING ANIMATIONS ===== */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Perfect icon-text alignment */
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+h1 img {
+  height: 1em; /* Same height as font size */
+  vertical-align: middle;
+  margin-bottom: 2px; /* Fine adjustment */
+}
+
+/* Upload section */
+.card[style*="text-align: center"] > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 18px;
+}
+
+.card[style*="text-align: center"] img {
+  height: 1em; /* Match text height */
+  vertical-align: middle;
+}
+
+/* Saved projects */
+.saved-files-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.saved-files-title img {
+  height: 1em; /* Match text height */
+  vertical-align: middle;
+  margin-bottom: 1px;
+}
   </style>
 </head>
 <body>
 
-<header>📄 Kurdish SRT Translator</header>
-<div class="author">Created by: Saad Kamaran</div>
+<header>
+  <div style="position: relative; z-index: 1;">
+    <h1 style="font-size: 28px; margin-bottom: 8px; background: linear-gradient(to right, #f1f5f9, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; justify-content: center; gap: 2px;">
+  <img src="icons/subtitle.png" alt="Editor" style="height: 28px; vertical-align: middle;">
+  Kurdish SRT Editor
+</h1>
+    <div class="author-cool">
+      <img src="icons/author.png" alt="Author" class="author-icon">
+      <span class="author-text">
+        <span class="author-created">Created by</span>
+        <span class="author-name">Saad Kamaran</span>
+      </span>
+    </div>
+  </div>
+</header>
 
-<!-- Add {\an8} button -->
-<button id="addAn8Btn" style="position: fixed; bottom: 150px; right: 20px; padding:6px 10px; border-radius:6px; border:none; background:var(--accent); color:#06281e; font-weight:600; z-index:1000;">
-  Add {\an8}
+<!-- Floating Action Buttons -->
+<button id="addAn8Btn" class="floating-btn glow" title="Add {\an8} to visible subtitle">
+  <img src="icons/an8.png" alt="Add Alignment" style="width: 22px; height: 22px;">
 </button>
 
-<!-- Go to line input -->
-<div id="gotoLineContainer" style="position: fixed; bottom: 80px; right: 20px; display:flex; gap:6px; z-index:1000;">
-  <input type="number" id="gotoLineInput" placeholder="Line #" style="width:60px; padding:6px; border-radius:6px; border:1px solid var(--accent);">
-  <button id="gotoLineBtn" style="padding:6px 10px; border-radius:6px; border:none; background:var(--accent); color:#06281e; font-weight:600;">Go</button>
+<div id="gotoLineContainer">
+  <input type="number" id="gotoLineInput" placeholder="Line #" min="1">
+  <button id="gotoLineBtn" class="glow">Go</button>
 </div>
 
-<!-- Scroll down button -->
-<button id="scrollDownBtn" style="
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--accent);
-  color: #06281e;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1000;
-">⬇️</button>
+<button id="scrollDownBtn" class="floating-btn glow" title="Scroll to bottom">
+  <img src="icons/arrow-down.png" alt="Scroll Down" style="width: 24px; height: 24px;">
+</button>
 
-<div class="container">
+<div class="card" style="text-align: center;">
+  <div style="margin-bottom: 10px; color: var(--accent-sky); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 2px; font-size: 18px;">
+    <img src="icons/upload.png" alt="Upload" style="height: 25px; vertical-align: middle;">
+    Upload SRT File
+  </div>
+  <input type="file" id="fileInput" accept=".srt" />
+</div>
 
   <div class="card">
-    <input type="file" id="fileInput" accept=".srt" />
+  <div class="saved-files-title">
+    <img src="icons/saved-projects.png" alt="Saved" style="height: 16px; vertical-align: middle;">
+    Saved Projects
   </div>
-
-  <div class="card file-list" id="savedFiles"></div>
+  <div id="savedFiles"></div>
+</div>
 
   <div id="subs"></div>
 
   <div class="card actions" id="controls" style="display:none">
-    <button onclick="downloadSRT()">⬇️ Download Kurdish SRT</button>
-    <button class="secondary" onclick="clearCurrent()">🗑️ Close File</button>
+    <button class="primary" onclick="downloadSRT()">
+      <img src="icons/download.png" alt="Download" style="height: 20px; margin-right: 8px;">
+      Export Kurdish SRT
+    </button>
+    <button class="secondary" onclick="clearCurrent()">
+      <img src="icons/close.png" alt="Close" style="height: 18px; margin-right: 8px;">
+      Close File
+    </button>
   </div>
-
 </div>
 
 <script>
@@ -235,12 +805,12 @@ function render() {
       <div class="time">${s.index} • ${s.time}</div>
       <div class="grid">
         <div>
-          <div class="label">Original</div>
+          <div class="label">Original Text</div>
           <textarea>${s.original}</textarea>
         </div>
         <div>
           <div class="label">Kurdish Translation</div>
-          <button class="translateBtn" style="margin-bottom:4px; padding:4px 6px; border:none; border-radius:6px; background:var(--accent); color:#06281e; font-weight:600;">Translate</button>
+          <button class="translate-btn"><img src="icons/translate-icon.png" alt="Translate" style="height: 16px; margin-right: 6px; vertical-align: middle;"> Translate</button>
           <textarea dir="rtl">${s.edited}</textarea>
         </div>
       </div>
@@ -256,34 +826,48 @@ function render() {
   });
 
   // Attach translate button events after rendering
-  subsDiv.querySelectorAll('.translateBtn').forEach((btn, i) => {
-  btn.addEventListener('click', async () => {
-    const subtitle = subtitles[i];
-    if (!subtitle.original.trim()) return;
+  subsDiv.querySelectorAll('.translate-btn').forEach((btn, i) => {
+    btn.addEventListener('click', async () => {
+      const subtitle = subtitles[i];
+      if (!subtitle.original.trim()) return;
 
-    // Step 1: join all lines into one string and remove extra whitespace
-    const textToTranslate = subtitle.original.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
+      // Add loading state with PNG icon
+      btn.innerHTML = '<img src="icons/loading.png" alt="Loading" style="height: 14px; margin-right: 6px; vertical-align: middle; animation: spin 1s linear infinite;"> Translating...';
+      btn.disabled = true;
 
-    try {
-      // Step 2: Translate to Sorani Kurdish (ckb)
-      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ckb&dt=t&q=${encodeURIComponent(textToTranslate)}`);
-      const data = await res.json();
+      // Step 1: join all lines into one string and remove extra whitespace
+      const textToTranslate = subtitle.original.replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
 
-      // Step 3: Join translated parts into a single line
-      const translatedText = data[0].map(d => d[0]).join('').replace(/\n/g, ' ').trim();
+      try {
+        // Step 2: Translate to Sorani Kurdish (ckb)
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ckb&dt=t&q=${encodeURIComponent(textToTranslate)}`);
+        const data = await res.json();
 
-      subtitle.edited = translatedText;
+        // Step 3: Join translated parts into a single line
+        const translatedText = data[0].map(d => d[0]).join('').replace(/\n/g, ' ').trim();
 
-      // Step 4: Update Kurdish textarea
-      const kurdTa = subsDiv.querySelectorAll('.subtitle')[i].querySelectorAll('textarea')[1];
-      kurdTa.value = subtitle.edited;
+        subtitle.edited = translatedText;
 
-      saveToStorage();
-    } catch (err) {
-      alert('Translation failed: ' + err);
-    }
+        // Step 4: Update Kurdish textarea
+        const kurdTa = subsDiv.querySelectorAll('.subtitle')[i].querySelectorAll('textarea')[1];
+        kurdTa.value = subtitle.edited;
+
+        saveToStorage();
+        
+        // Add success animation with PNG icon
+        btn.innerHTML = '<img src="icons/check.png" alt="Success" style="height: 16px; margin-right: 6px; vertical-align: middle;"> Translated!';
+        setTimeout(() => {
+          btn.innerHTML = '<img src="icons/translate-icon.png" alt="Translate" style="height: 16px; margin-right: 6px; vertical-align: middle;"> Translate';
+          btn.disabled = false;
+        }, 1500);
+        
+      } catch (err) {
+        alert('Translation failed: ' + err);
+        btn.innerHTML = '<img src="icons/translate-icon.png" alt="Translate" style="height: 16px; margin-right: 6px; vertical-align: middle;"> Translate';
+        btn.disabled = false;
+      }
+    });
   });
-});
 }
 
 function saveToStorage() {
@@ -292,21 +876,31 @@ function saveToStorage() {
 }
 
 function loadSavedFiles() {
-  savedFilesDiv.innerHTML = '<strong>Saved Projects</strong>';
+  savedFilesDiv.innerHTML = '';
   Object.keys(localStorage)
     .filter(k => k.startsWith('srt-'))
     .forEach(key => {
       const container = document.createElement('div');
-      container.style.cssText = 'display:flex;justify-content:space-between;margin-top:6px';
+      container.className = 'saved-file-item';
 
-      ['📂','🗑️'].forEach((icon, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'secondary';
-        btn.textContent = i === 0 ? key.replace('srt-', icon + ' ') : icon;
-        btn.onclick = () => i === 0 ? openSaved(key) : confirm('Delete this saved project?') && (localStorage.removeItem(key), loadSavedFiles(), currentFileKey===key && clearCurrent());
-        container.appendChild(btn);
-      });
+      const openBtn = document.createElement('button');
+      openBtn.className = 'file-btn primary';
+      openBtn.innerHTML = `
+        <img src="icons/folder.png" alt="Open" style="height: 16px; margin-right: 8px; vertical-align: middle;">
+        ${key.replace('srt-', '')}
+      `;
+      openBtn.onclick = () => openSaved(key);
 
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'file-btn secondary';
+      deleteBtn.innerHTML = `
+        <img src="icons/trash.png" alt="Delete" style="height: 14px; margin-right: 6px; vertical-align: middle;">
+        Delete
+      `;
+      deleteBtn.onclick = () => confirm('Delete this saved project?') && (localStorage.removeItem(key), loadSavedFiles(), currentFileKey===key && clearCurrent());
+
+      container.appendChild(openBtn);
+      container.appendChild(deleteBtn);
       savedFilesDiv.appendChild(container);
     });
 }
@@ -363,13 +957,36 @@ addAn8Btn.addEventListener('click', () => {
         kurdTa.value = subtitle.edited;
         saveToStorage();
         added = true;
+        
+        // Add visual feedback
+        card.style.borderColor = 'var(--accent-sky)';
+        card.style.boxShadow = '0 0 25px var(--shadow-glow)';
+        setTimeout(() => {
+          card.style.borderColor = '';
+          card.style.boxShadow = '';
+        }, 1000);
+        
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   });
-  // Move Add {\an8} button above keyboard on mobile
-const allTextareas = () => document.querySelectorAll('textarea');
+  
+  if (!added) alert('No visible subtitle to add {\\an8} to.');
+});
 
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault();
+    if (currentFileKey) saveToStorage();
+  }
+  if (e.key === 'Escape') {
+    clearCurrent();
+  }
+});
+
+// Mobile keyboard handling
+const allTextareas = () => document.querySelectorAll('textarea');
 allTextareas().forEach(ta => {
   ta.addEventListener('focus', () => {
     addAn8Btn.style.bottom = '300px';
@@ -378,6 +995,7 @@ allTextareas().forEach(ta => {
     addAn8Btn.style.bottom = '150px';
   });
 });
+
 // Handle dynamically rendered subtitles
 subsDiv.addEventListener('input', () => {
   allTextareas().forEach(ta => {
@@ -388,8 +1006,6 @@ subsDiv.addEventListener('input', () => {
       addAn8Btn.style.bottom = '150px';
     });
   });
-});
-  if (!added) alert('No visible subtitle to add {\\an8} to.');
 });
 </script>
 

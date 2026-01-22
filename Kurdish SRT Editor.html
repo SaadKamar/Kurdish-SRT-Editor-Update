@@ -9,6 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    .author {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
     :root {
       --bg: #0d0f12;
       --card: #16181d;
@@ -124,9 +131,25 @@
 
   </style>
 </head>
+<!-- Add this inside <body>, just before </body> -->
+<button id="scrollDownBtn" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--accent);
+  color: #06281e;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+">⬇️</button>
 <body>
 
 <header>📄 Kurdish SRT Translator</header>
+<div class="author">Created by: Saad Kamaran</div>
 
 <div class="container">
 
@@ -146,6 +169,11 @@
 </div>
 
 <script>
+  const scrollBtn = document.getElementById('scrollDownBtn');
+scrollBtn.addEventListener('click', () => {
+  controls.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
 let subtitles = [];
 let currentFileKey = null;
 
@@ -222,17 +250,24 @@ function saveToStorage() {
 
 function loadSavedFiles() {
   savedFilesDiv.innerHTML = '<strong>Saved Projects</strong>';
-
   Object.keys(localStorage)
     .filter(k => k.startsWith('srt-'))
     .forEach(key => {
-      const btn = document.createElement('button');
-      btn.className = 'secondary';
-      btn.textContent = key.replace('srt-', '📂 ');
-      btn.onclick = () => openSaved(key);
-      savedFilesDiv.appendChild(btn);
+      const container = document.createElement('div');
+      container.style.cssText = 'display:flex;justify-content:space-between;margin-top:6px';
+
+      ['📂', '🗑️'].forEach((icon, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'secondary';
+        btn.textContent = i === 0 ? key.replace('srt-', icon + ' ') : icon;
+        btn.onclick = () => i === 0 ? openSaved(key) : confirm('Delete this saved project?') && (localStorage.removeItem(key), loadSavedFiles(), currentFileKey===key&&clearCurrent());
+        container.appendChild(btn);
+      });
+
+      savedFilesDiv.appendChild(container);
     });
 }
+
 
 function openSaved(key) {
   subtitles = JSON.parse(localStorage.getItem(key));
@@ -247,12 +282,48 @@ function clearCurrent() {
   currentFileKey = null;
 }
 
+let originalFileName = ''; // <-- add this at the top with subtitles & currentFileKey
+
+function loadSRT(name, text) {
+  originalFileName = name; // save original name
+  const blocks = text.trim().split(/\n\s*\n/);
+  subtitles = blocks.map(b => {
+    const lines = b.split('\n');
+    return {
+      index: lines[0],
+      time: lines[1],
+      original: lines.slice(2).join('\n'),
+      edited: ''
+    };
+  });
+
+  currentFileKey = 'srt-' + name;
+  saveToStorage();
+  render();
+  controls.style.display = 'flex';
+  loadSavedFiles();
+}
+
 function downloadSRT() {
-  const content = subtitles.map(s => `${s.index}\n${s.time}\n${s.edited || s.original}`).join('\n\n');
-  const blob = new Blob([content], { type: 'text/plain' });
+  if (!currentFileKey) return alert('No file loaded!');
+
+  const content = subtitles
+    .map(s => `${s.index}\n${s.time}\n${s.edited || s.original}`)
+    .join('\n\n');
+
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'kurdish.srt';
+
+  // Use the saved project name (remove the "srt-" prefix)
+  let name = currentFileKey.replace(/^srt-/, '');
+  
+  // Ensure it ends with .srt
+  if (!name.toLowerCase().endsWith('.srt')) {
+    name = name.replace(/\.\w+$/, '') + '.srt';
+  }
+
+  a.download = name; // now uses the project name
   a.click();
 }
 </script>

@@ -4,7 +4,7 @@
   "description": "Edit SRT subtitles in Kurdish language",
   "start_url": "Kurdish%20SRT%20Editor.html",
   "display": "standalone",
-  "background_color": "#0a0b0e",
+  "background_color": "transparent",
   "theme_color": "#0ea5e9",
   "orientation": "portrait",
   "icons": [

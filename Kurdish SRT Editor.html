@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SRT Kurdish Editor</title>
+    <!-- PWA Configuration for iOS Home Screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Kurdish SRT Editor">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+    <!-- iOS Home Screen Icons -->
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- iOS Splash Screen Meta Tags -->
+  <meta name="apple-mobile-web-app-orientations" content="portrait">
 
   <!-- Kurdish-friendly font -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
@@ -1129,6 +1146,11 @@
   </style>
 </head>
 <body>
+  <!-- Splash Screen for iOS -->
+<div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0b0e; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s;">
+  <div style="font-size: 24px; color: #0ea5e9; margin-bottom: 20px; font-weight: bold;">Kurdish SRT Editor</div>
+  <div style="font-size: 14px; color: #94a3b8;">Loading...</div>
+</div>
 
 <header>
   <div style="position: relative; z-index: 1;">
@@ -1190,6 +1212,19 @@
 </div>
 
 <script>
+  // Hide splash screen
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash-screen');
+  if (splash) {
+    setTimeout(() => {
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 500);
+    }, 1000);
+  }
+});
+
 const scrollBtn = document.getElementById('scrollDownBtn');
 scrollBtn.addEventListener('click', () => {
   controls.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1847,6 +1882,26 @@ document.getElementById('lineInsertModal').addEventListener('click', function(e)
 document.getElementById('deleteLineModal').addEventListener('click', function(e) {
   if (e.target === this) closeDeleteLineModal();
 });
+
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful');
+      })
+      .catch(err => {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+
+// Prevent iOS from opening in Safari
+if (window.navigator.standalone === true) {
+  // App is running in standalone mode
+  document.documentElement.style.setProperty('--safe-area-top', 'env(safe-area-inset-top)');
+  document.documentElement.style.setProperty('--safe-area-bottom', 'env(safe-area-inset-bottom)');
+}
 </script>
 
 <!-- Custom Delete Confirmation Modal -->

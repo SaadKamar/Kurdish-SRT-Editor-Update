@@ -4,12 +4,12 @@
   <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SRT Editor</title>
+  <title>Kurdish SRT Editor</title>
   
   <!-- PWA & iOS Home Screen Configuration -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="SRT Editor">
+  <meta name="apple-mobile-web-app-title" content="Kurdish SRT Editor">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
   <meta name="apple-mobile-web-app-orientations" content="portrait">
@@ -1168,11 +1168,197 @@
   </style>
 </head>
 <body>
-  <!-- Splash Screen for iOS -->
-<div id="splash-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0b0e; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s;">
-  <div style="font-size: 24px; color: #0ea5e9; margin-bottom: 20px; font-weight: bold;">Kurdish SRT Editor</div>
-  <div style="font-size: 14px; color: #94a3b8;">Loading...</div>
+<!-- Enhanced Loading Screen with Custom PNG -->
+<div id="splash-screen" style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0b0e 0%, #0f1117 50%, #0a0b0e 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease-out;
+">
+  <!-- Spinning Wheel (REPLACED SECTION) -->
+  <div style="
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 30px;
+  ">
+    <!-- Outer Ring (spinning) -->
+    <div style="
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 4px solid transparent;
+      border-top: 4px solid #0ea5e9;
+      border-right: 4px solid rgba(14, 165, 233, 0.3);
+      border-bottom: 4px solid rgba(14, 165, 233, 0.1);
+      border-left: 4px solid rgba(14, 165, 233, 0.3);
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    "></div>
+    
+    <!-- Middle Ring (spinning opposite direction) -->
+    <div style="
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+      border: 3px solid transparent;
+      border-top: 3px solid rgba(14, 165, 233, 0.7);
+      border-right: 3px solid rgba(14, 165, 233, 0.2);
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite reverse;
+    "></div>
+    
+    <!-- Inner Dot (pulsing) -->
+    <div style="
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #0ea5e9;
+      border-radius: 50%;
+      box-shadow: 0 0 15px #0ea5e9;
+      animation: pulse 1.5s ease-in-out infinite;
+    "></div>
+  </div>
+  
+  <!-- Animated app name -->
+  <div style="
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #f1f5f9, #0ea5e9, #7dd3fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+    letter-spacing: 1px;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+  ">Kurdish SRT Editor</div>
+  
+  <!-- Loading text with dots -->
+  <div style="
+    font-size: 16px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+    font-family: monospace;
+    letter-spacing: 2px;
+  ">
+    LOADING<span id="loadingDots">...</span>
+  </div>
+  
+  <!-- Progress bar -->
+  <div style="
+    width: 200px;
+    height: 4px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 2px;
+    overflow: hidden;
+  ">
+    <div style="
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+      border-radius: 2px;
+      animation: loadingProgress 2s ease-in-out infinite;
+    "></div>
+  </div>
+  
+  <!-- Loading tips -->
+  <div style="
+    position: absolute;
+    bottom: 40px;
+    font-size: 13px;
+    color: rgba(148, 163, 184, 0.6);
+    text-align: center;
+    padding: 0 20px;
+    max-width: 300px;
+    animation: fadeInUp 1s ease-out 1s both;
+  ">
+    <div>Professional Kurdish Subtitle Editor</div>
+    <div style="font-size: 11px; margin-top: 5px; opacity: 0.5;">Created By: Saad Kamaran</div>
+  </div>
 </div>
+
+<style>
+  /* New spinning animations */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow: 0 0 15px #0ea5e9;
+    }
+    50% {
+      opacity: 0.7;
+      transform: translate(-50%, -50%) scale(1.2);
+      box-shadow: 0 0 25px #0ea5e9;
+    }
+  }
+  
+  /* Keep your original animations */
+  @keyframes titleGlow {
+    0% {
+      text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+      background-position: 0% 50%;
+    }
+    100% {
+      text-shadow: 0 0 40px rgba(14, 165, 233, 0.8);
+      background-position: 100% 50%;
+    }
+  }
+  
+  @keyframes loadingProgress {
+    0%, 100% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(250%);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  // Animate the loading dots
+  document.addEventListener('DOMContentLoaded', function() {
+    const dots = document.getElementById('loadingDots');
+    let dotCount = 0;
+    
+    setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      dots.textContent = '.'.repeat(dotCount);
+    }, 500);
+  });
+</script>
 
 <header>
   <div style="position: relative; z-index: 1;">
@@ -1243,7 +1429,7 @@ window.addEventListener('load', () => {
       setTimeout(() => {
         splash.style.display = 'none';
       }, 500);
-    }, 1000);
+    }, 5000);
   }
 });
 
